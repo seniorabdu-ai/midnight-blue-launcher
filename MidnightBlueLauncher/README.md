@@ -1,35 +1,26 @@
-# MIDNIGHT BLUE — Android TV Launcher
+# MIDNIGHT BLUE — Red Sea Edition
 
-A first-pass native Android TV launcher for Xiaomi TV Stick 4K / Android TV 11. It is designed for 1920×1080 landscape screens and remote-control navigation.
+Native Android TV launcher for Xiaomi TV Stick 4K / Android TV 11.
 
-## Build without Android Studio
+## Version 2.0 Premium redesign
+- 1920×1080 landscape-first composition with a layered Red Sea dusk illustration.
+- Large live clock and date; Al Quseir prayer-time panel with a live next-prayer countdown (silent).
+- Large app cards that use the installed apps' own launcher icons when available.
+- D-pad navigation and OK-to-launch behavior.
+- All Apps screen discovers Leanback apps, with a regular launcher fallback.
+- Stock Xiaomi launcher is not disabled or replaced by the installer.
 
-1. Create a new **private** GitHub repository named `MidnightBlueLauncher`.
-2. Upload the contents of this folder to the repository root (including the hidden `.github` folder).
-3. Open **Actions** → **Build MIDNIGHT BLUE APK** → **Run workflow**.
-4. When the run completes, open it and download the `midnight-blue-debug-apk` artifact.
-5. Extract the ZIP; the APK is `app-debug.apk`.
-
-The workflow builds on GitHub's cloud runner. No Java, Gradle, Android Studio, or SDK installation is needed on the Mac.
-
-## Install and test
-
-With ADB connected to the TV Stick:
+## Build
+Requires JDK 17 and Android SDK platform 35/build-tools 35.0.0.
 
 ```bash
-~/Downloads/platform-tools/adb install -r app-debug.apk
+gradle assembleDebug
 ```
 
-Launch it once from the Apps list. To test the Home intent without changing the default launcher:
+APK output: `app/build/outputs/apk/debug/app-debug.apk`.
 
-```bash
-~/Downloads/platform-tools/adb shell am start -a android.intent.action.MAIN -c android.intent.category.HOME
-```
-
-Only after verifying the screen and remote controls should you choose MIDNIGHT BLUE as the Home app in Android TV settings, if the device exposes that option. The stock launcher and PatchWall are not disabled or removed.
-
-## Notes / first-build limitations
-
-- Prayer times are calculated locally for Al Quseir using approximate Egyptian-method angles (Fajr 19.5°, Isha 17.5°). Verify against your preferred local mosque / official timetable before relying on them. No adhan audio is played.
-- App shortcuts resolve installed package names at runtime. MBC and Prime Video can vary by region/device package; missing apps show `NOT FOUND` rather than causing a crash.
-- This first build is a visual/functional prototype. The background is drawn locally (not a Red Sea photograph); later we can replace it with a chosen background image and refine prayer-time calculation/adjustments.
+## Important notes
+- This is a native launcher build, not an HTML/TV-browser page.
+- Prayer times are calculated locally for Al Quseir using Egyptian-method solar angles. They should be compared with the official local timetable before relying on them for religious observance. No adhan audio is played.
+- Package IDs for streaming apps vary by region/device. Missing apps remain visible but show “Not installed”; All Apps provides a fallback list.
+- The launcher has not yet been validated on the target Xiaomi TV Stick. Keep the stock launcher as the default until the new build has been visually and functionally tested.
